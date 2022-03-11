@@ -32,8 +32,7 @@ describe("snapshot", () => {
   });
 
   it("table ", () => {
-    renderPage(data, false);
-
+    renderPage(data, true);
     const table = document.getElementById("table");
 
     assert.equal(
