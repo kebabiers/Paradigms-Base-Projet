@@ -1,5 +1,5 @@
 const createChart = require("./graph");
-var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps} = require("./function");
+var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, convert, group, sum} = require("./function");
 
 /**
  * Génère le rendu de la page.
@@ -39,12 +39,7 @@ function renderPage(data, withGraph) {
     tr.appendChild(dateCell);
 
     let capteurCell = document.createElement("td");
-    capteurCell.innerHTML = mesure.type;
-    tr.appendChild(capteurCell);
-
-    let valeurCell = document.createElement("td");
-    valeurCell.innerHTML = mesure.valeur;
-    tr.appendChild(valeurCell);
+    capteurCell.innerHTML = mesure.type;sum
 
     table.appendChild(tr);
 
@@ -73,23 +68,19 @@ function renderPage(data, withGraph) {
   }
 }
 
-/*
-function renderPageOld(data, withGraph) {
+let objet = {
+  id: 2,
+  valeur: 50, 
+  type: "temperature",
+  timestamp: "2022-02-09T08:30:59",
+};
 
-  let bruitParHeure = {}
-  let graphData = {}
-  let table = fillTable();
+let data = {
+  "a": [1,8,13],
+  "b": [2, 13, 25],
+};
 
-  for (let i = 0; i < data.length; i++) {
-    fillData(data[i], table);
-    bruitParHeure = fillBruitParHeure(data[i]);
-    // console.log(bruitParHeure)
-    if (bruitParHeure.length) {
-      graphData[i] = createDataChar(bruitParHeure);
-    }
-  }
-  if(withGraph) window.chart = checkCreateChart("myChar", graphData, withGraph);
-}
-*/
+console.log(mapValue(sum, data));
+
 
 module.exports = renderPage;

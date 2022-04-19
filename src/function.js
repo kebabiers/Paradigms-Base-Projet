@@ -1,4 +1,5 @@
 const createChart = require("./graph");
+const {toCelsius} = require("./temperature");
 
 function createTable() {
     return document.createElement("table");
@@ -72,8 +73,10 @@ function createDataChar(bruitsParHeure) {;
     return Object.entries(bruitsParHeure).reduce((acc, val) => acc + val) / Object.entries(bruitsParHeure).length;
 }
 
-function addDateProps(objet) {
-    let date = new Date(objet.timestamp);
+function addDateProps({
+    timestamp
+}) {
+    let date = new Date(timestamp);
     return  {
         frDate : date.toLocaleDateString('fr-FR'),
         jour: date.getDay(),
@@ -83,9 +86,37 @@ function addDateProps(objet) {
     }
 }
 
+const sum = (x) => (x.reduce((prev, curr) => prev + curr)) / x.length; 
+const mapValue = (func, data) => 
+Object.fromEntries(
+    Object.entries(data).map(([key, value]) => [key, func(value)] )
+)
+
+
+const convert = (({type, valeur}) => type === "temperature" ? toCelsius(valeur) : "")
+
+const group = ({valeur}) => valeur.groupBy(valeur => `${valeur.date.heure}h`);
+
+
+exports.sum = sum; 
+exports.group = group;
+exports.convert = convert;
+exports.mapValue = mapValue;
 exports.fillTable = fillTable;
 exports.fillBruitParHeure = fillBruitParHeure;
 exports.fillData = fillData;
 exports.checkCreateChart = checkCreateChart;
 exports.createDataChar = createDataChar;
 exports.addDateProps = addDateProps;
+
+/*
+const data = {
+    "hero": "batman",
+    "mechant": "harley queen",
+}
+mapValue(x => "hello" + x, data)
+let res = {
+    "hero": "hellobatman",
+    "mechant": "helloharley queen"
+}
+*/
