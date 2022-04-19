@@ -72,9 +72,20 @@ function createDataChar(bruitsParHeure) {;
     return Object.entries(bruitsParHeure).reduce((acc, val) => acc + val) / Object.entries(bruitsParHeure).length;
 }
 
+function addDateProps(objet) {
+    let date = new Date(objet.timestamp);
+    return  {
+        frDate : date.toLocaleDateString('fr-FR'),
+        jour: date.getDay(),
+        mois : date.getMonth(),
+        annee : date.getFullYear(),
+        heure : date.getHours()
+    }
+}
 
 exports.fillTable = fillTable;
 exports.fillBruitParHeure = fillBruitParHeure;
 exports.fillData = fillData;
 exports.checkCreateChart = checkCreateChart;
 exports.createDataChar = createDataChar;
+exports.addDateProps = addDateProps;

@@ -1,5 +1,5 @@
 const createChart = require("./graph");
-var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar } = require("./function");
+var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps} = require("./function");
 
 /**
  * Génère le rendu de la page.
