@@ -103,11 +103,8 @@ function average(x) {
 
 const convert = (({type, valeur}) => type === "temperature" ? toCelsius(valeur) : "")
 
-const group = ({valeur}) => valeur.groupBy(valeur => `${valeur.date.heure}h`);
-
 exports.somme = somme;
 exports.average = average;
-exports.group = group;
 exports.convert = convert;
 exports.mapValue = mapValue;
 exports.fillTable = fillTable;
@@ -116,15 +113,3 @@ exports.fillData = fillData;
 exports.checkCreateChart = checkCreateChart;
 exports.createDataChar = createDataChar;
 exports.addDateProps = addDateProps;
-
-/*
-const data = {
-    "hero": "batman",
-    "mechant": "harley queen",
-}
-mapValue(x => "hello" + x, data)
-let res = {
-    "hero": "hellobatman",
-    "mechant": "helloharley queen"
-}
-*/

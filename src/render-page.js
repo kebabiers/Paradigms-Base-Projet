@@ -1,5 +1,7 @@
 const createChart = require("./graph");
-var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, convert, group, average} = require("./function");
+var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, average} = require("./function");
+const { toCelsius } = require("./temperature");
+const { forkJoin } = require("rxjs");
 
 /**
  * Génère le rendu de la page.
@@ -68,12 +70,57 @@ function renderPage(data, withGraph) {
   }
 }
 
-let data = {
-  "a": [1,8,13],
-  "b": [2, 13, 25],
-};
+const data = [
+  {
+    id: 1,
+    valeur: 1.11,
+    type: "cod",
+    timestamp: "2022-02-09T08:30:59",
+  },
+  {
+    id: 2,
+    valeur: 50,
+    type: "temperature",
+    timestamp: "2022-02-09T08:30:59",
+  },
+  {
+    id: 3,
+    valeur: 10,
+    type: "noise",
+    timestamp: "2022-02-09T08:30:59",
+  },
+];
 
-console.log(mapValue((x) => average(x) , data));
+function transform(array) {
+  let [{valeur, ...rest}] = array;
+  valeur = toCelsius(valeur)
+  return {
+    valeur, 
+    ...rest
+  };
+}
 
+function filter (objet) {
+  return objet.filter(x => x.type === 'temperature');
+}
+
+const convert = (filter, transform) => (value) => {
+  let res = filter(value)
+  if(! filter(value)) {
+    return value;
+  }
+
+  let [first, second, ...rest] = value;
+  second = transform(res);
+
+
+  return [
+    first,
+    second,
+    ...rest
+  ]
+}
+
+console.log(convert(filter, transform)(data))
 
 module.exports = renderPage;
