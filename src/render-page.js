@@ -1,5 +1,5 @@
 const createChart = require("./graph");
-var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, convert, group, sum} = require("./function");
+var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, convert, group, average} = require("./function");
 
 /**
  * Génère le rendu de la page.
@@ -39,7 +39,7 @@ function renderPage(data, withGraph) {
     tr.appendChild(dateCell);
 
     let capteurCell = document.createElement("td");
-    capteurCell.innerHTML = mesure.type;sum
+    capteurCell.innerHTML = mesure.type;
 
     table.appendChild(tr);
 
@@ -68,19 +68,12 @@ function renderPage(data, withGraph) {
   }
 }
 
-let objet = {
-  id: 2,
-  valeur: 50, 
-  type: "temperature",
-  timestamp: "2022-02-09T08:30:59",
-};
-
 let data = {
   "a": [1,8,13],
   "b": [2, 13, 25],
 };
 
-console.log(mapValue(sum, data));
+console.log(mapValue((x) => average(x) , data));
 
 
 module.exports = renderPage;

@@ -86,19 +86,27 @@ function addDateProps({
     }
 }
 
-const sum = (x) => (x.reduce((prev, curr) => prev + curr)) / x.length; 
 const mapValue = (func, data) => 
 Object.fromEntries(
     Object.entries(data).map(([key, value]) => [key, func(value)] )
 )
 
 
+function somme(x) {
+    return (x.reduce((prev, curr) => prev + curr));
+}
+  
+function average(x) {
+    return somme(x) / x.length;
+}
+
+
 const convert = (({type, valeur}) => type === "temperature" ? toCelsius(valeur) : "")
 
 const group = ({valeur}) => valeur.groupBy(valeur => `${valeur.date.heure}h`);
 
-
-exports.sum = sum; 
+exports.somme = somme;
+exports.average = average;
 exports.group = group;
 exports.convert = convert;
 exports.mapValue = mapValue;
