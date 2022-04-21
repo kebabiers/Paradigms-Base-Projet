@@ -113,14 +113,20 @@ const convert = (filter, transform) => (value) => {
   let [first, second, ...rest] = value;
   second = transform(res);
 
-
   return [
     first,
     second,
     ...rest
   ]
 }
+//convert(filter, transform)(data)
 
-console.log(convert(filter, transform)(data))
+const map2 = (tab, fn, finalTab = [], cmpt = 0) => {
+  if(finalTab.length >= tab.length) return finalTab;
+  finalTab.push(fn(tab[cmpt]))
+  cmpt ++
+  return map2(tab, fn, finalTab, cmpt);
+}
 
+console.log(map2([1,2,3,4,5,12], x =>  x+1))
 module.exports = renderPage;
