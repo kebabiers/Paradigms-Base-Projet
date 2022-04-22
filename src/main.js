@@ -3,17 +3,7 @@ const { renderTable, renderGraph } = require("./render-page");
 const { fromEvent, combineLatest, throttleTime, scan, from, interval, timer, Observable, catchError, switchMap, of} = require("rxjs");
 const { fromFetch } = require("rxjs/fetch");
 
-const waiting = interval(1000);
-
-
-// fromEvent(document, "DOMContentLoaded")
-//   .pipe(
-//     () => console.log('coucou'),
-//     () => waiting.subscribe(fetchData().then((data) => {
-//       console.log(data);
-//       update(data)
-//     })
-//   ))
+const waiting = interval(5000);
 
 
 function update(data) {
@@ -45,13 +35,5 @@ observable.subscribe({
 document.addEventListener("DOMContentLoaded", function () {
   combineLatest(waiting,observable).subscribe(observer)
 });
-
-// async function update() {
-//   const data = await fetchData();
-// }
-
-// async function fillData() {
-//   data = await fetchData();
-// }
 
 
