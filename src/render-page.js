@@ -1,28 +1,35 @@
 const createChart = require("./graph");
 var { fillTable, fillBruitParHeure, fillData, checkCreateChart, createDataChar, addDateProps, mapValue, average} = require("./function");
 const { toCelsius } = require("./temperature");
-const { forkJoin } = require("rxjs");
+const { forkJoin, Observable, timer, onErrorResumeNext } = require("rxjs");
 
 /**
  * Génère le rendu de la page.
  * @param {import("../types").Mesure[]} data
  * @param {boolean} withGraph Pour les tests
  */
-function renderPage(data, withGraph) {
 
-  let bruitParHeure = {}
-  let graphData = {}
+function renderTable(data) {
   let table = fillTable();
 
   for (let i = 0; i < data.length; i++) {
     fillData(data[i], table);
+  }
+}
+
+function renderGraph(data) {
+  let bruitParHeure = {}
+  let graphData = {}
+
+  for (let i = 0; i < data.length; i++) {
     bruitParHeure = fillBruitParHeure(data[i]);
     if (bruitParHeure) {
       graphData[i] = createDataChar(bruitParHeure);
     }
   }
-  if(withGraph) window.chart = checkCreateChart("myChart", graphData, withGraph);
+  window.chart = checkCreateChart("myChart", graphData, true);
 }
+
 
 const data = [
   {
@@ -116,4 +123,5 @@ const reduce2 = (tab, fn, cmpt = 0, prev = tab[0]) => {
 // console.log(filter2([1,2,3,4,5,12], x => x > 2))
 // console.log(reduce2([4,2,3], (prev, curr) => prev * curr));
 
-module.exports = renderPage;
+exports.renderTable = renderTable;
+exports.renderGraph = renderGraph;
