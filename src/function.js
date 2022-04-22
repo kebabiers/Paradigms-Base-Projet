@@ -69,8 +69,8 @@ function checkCreateChart(id, graphData, withGraph) {
     return createChart(id, graphData, "bruit");
 }
 
-function createDataChar(bruitsParHeure) {;
-    return Object.entries(bruitsParHeure).reduce((acc, val) => acc + val) / Object.entries(bruitsParHeure).length;
+function createDataChar(bruitsParHeure) {
+    return Object.values(bruitsParHeure).reduce((acc, val) => acc + val) / Object.entries(bruitsParHeure).length;
 }
 
 function addDateProps({
